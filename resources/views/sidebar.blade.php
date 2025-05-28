@@ -11,7 +11,13 @@
                 <img src="{{ url('assets') }}/images/icon/avatar-big-01.jpg" alt="John Doe" />
             </div>
             <h4 class="name">john doe</h4>
-            <a href="{{ route('login') }}">Sign out</a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Sign out
+            </a>
         </div>
         <nav class="navbar-sidebar2">
             <ul class="list-unstyled navbar__list">
