@@ -1,0 +1,64 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: oa-test-app
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./vendor:/var/www/vendor # Optional: persist vendor if installing on host
+    networks:
+      - oa-test-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: oa-test-db
+    environment:
+      MYSQL_DATABASE: oa_test_db
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravelpassword
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - oa-test-network
+
+  nginx:
+    image: nginx:latest
+    container_name: oa-test-nginx
+    ports:
+      - "8484:80"
+    volumes:
+      - .:/var/www
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - oa-test-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: oa-test-phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: laravel
+      PMA_PASSWORD: laravelpassword
+      PMA_ARBITRARY: 1
+    ports:
+      - "8485:80"
+    depends_on:
+      - db
+    networks:
+      - oa-test-network
+
+networks:
+  oa-test-network:
+    driver: bridge
+
+volumes:
+  db_data:
