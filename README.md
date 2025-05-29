@@ -90,6 +90,50 @@ Before you start, ensure you have the following installed:
         -   USER: _[Pick a User Email from the users table in the DB]_
         -   PASS: `password`
 
+## Local Setup (From a ZIPPED project bundle)
+
+Make sure you have the necessary prerequisites before proceeding with this.
+
+1. **Unzip to your htdocs (or www as the case may be) and make sure to start up your local server**
+
+2. **Navigate to the project directory in your terminal (assuming you unzipped into "oa-test" folder):**
+
+    ```bash
+    cd oa-test/
+    ```
+
+3. **Install composer:**
+
+    ```bash
+    composer install
+    ```
+
+4. **Serve Project:**
+
+    ```bash
+    php artisan serve
+    ```
+
+5. **Run migration, seeders and test (first create database "oa_test_db" within your phpmyadmin):**
+
+    ```bash
+    php artisan migrate:fresh --seed && php artisan test
+    ```
+
+6. **Accessing the application:**
+
+-   The application should now be running on your local environment.
+-   Navigate to `http://localhost:8000` in your browser to access the application.
+-   To access the database, go to your phpmyadmin and locate `oa_test_db`.
+-   To login to the app:
+    -   With the "Admin" privilege:
+        -   USER: `superadmin@mail.com`
+        -   PASS: `superadmin`
+            This should work as long as you ran the above migration code
+    -   With a regular "User" privilege:
+        -   USER: _[Pick a User Email from the users table in the DB]_
+        -   PASS: `password`
+
 ## PART 2 - DATABASE ASSESSMENT – Advanced SQL and Modelling (Task)
 
 For the Part 2 task, the SQL to given below are coined from the schema given in the assessment:
