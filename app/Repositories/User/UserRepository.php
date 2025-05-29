@@ -57,4 +57,9 @@ class UserRepository implements UserRepositoryInterface
         $user->save();
         return $user;
     }
+
+    public function countByRole(string $role): int
+    {
+        return $this->user->where('role', $role)->count();
+    }
 }

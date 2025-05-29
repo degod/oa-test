@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Repositories\Project\ProjectRepository;
+use App\Repositories\Project\ProjectRepositoryInterface;
 use App\Repositories\User\UserRepository;
 use App\Repositories\User\UserRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -14,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
     }
 
     /**
@@ -21,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Blade::if('role', function ($role) {
+            return Auth::check() && Auth::user()->role === $role;
+        });
     }
 }

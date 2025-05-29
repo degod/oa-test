@@ -13,7 +13,7 @@ class RegisterController extends Controller
 
     public function showForm()
     {
-        return view('auth.register'); // Your Blade view for register form
+        return view('auth.register');
     }
 
     public function register(RegisterRequest $request)

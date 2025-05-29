@@ -7,12 +7,13 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class UserManagementController extends Controller
 {
     public function __construct(private UserRepositoryInterface $userRepository) {}
 
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $filters = $request->only(['name', 'email', 'role']);
         $users = $this->userRepository->getAllWithFilters($filters)->appends($request->all());

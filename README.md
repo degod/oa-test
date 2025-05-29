@@ -1,61 +1,154 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## OA Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a very simple Laravel CODING ASSESSMENT. It has features such as:
 
-## About Laravel
+-   Authentication and Authorization
+-   User Management CRUD
+-   Project Management CRUD
+-   Simple RBAC (Role Based Access Control)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Data are saved to a mysql table. The application is built on Laravel 12.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Before you start, ensure you have the following installed:
 
-## Learning Laravel
+-   Docker
+-   PHP version 8.2 or later
+-   Web browser
+-   Shell or terminal environment
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Setting up the project locally
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Clone the repository:**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone git@github.com:degod/oa-test.git
+    ```
 
-## Laravel Sponsors
+2. **Navigate to the project directory:**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    cd oa-test/
+    ```
 
-### Premium Partners
+3. **Build and start app in Docker (make sure you already started your docker locally before running below):**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    ```bash
+    docker-compose up --build -d
+    ```
+
+4. **Getting your env sorted:**
+
+    ```bash
+    docker exec -it oa-test-app cp .env.example .env
+    ```
+
+5. **Installing composer:**
+
+    ```bash
+    docker exec -it oa-test-app composer install
+    ```
+
+6. **Sorting your application key:**
+
+    ```bash
+    docker exec -it oa-test-app  php artisan key:generate
+    ```
+
+7. **Logging in to container shell:**
+
+    ```bash
+    docker exec -it oa-test-app bash
+    ```
+
+8. **Completing the setup:**
+
+    ```bash
+    php artisan migrate:fresh --seed && php artisan test
+    ```
+
+9. **Exiting container shell:**
+
+    ```bash
+    exit
+    ```
+
+10. **Accessing the application:**
+
+-   The application should now be running on your local environment.
+-   Navigate to `http://localhost:8484` in your browser to access the application.
+-   To access the database, go to `http://localhost:8485/`.
+    -   USER: `laravel`
+    -   PASS: `laravelpassword`
+-   To login to the app:
+    -   With the "Admin" privilege:
+        -   USER: `superadmin@mail.com`
+        -   PASS: `superadmin`
+            This should work as long as you ran the above migration code
+    -   With a regular "User" privilege:
+        -   USER: _[Pick a User Email from the users table in the DB]_
+        -   PASS: `password`
+
+## PART 2 - DATABASE ASSESSMENT – Advanced SQL and Modelling (Task)
+
+For the Part 2 task, the SQL to given below are coined from the schema given in the assessment:
+
+-   Retrieve a list of employees with their department names
+
+```bash
+    SELECT
+        e.name AS employee_name,
+        d.name AS department_name
+    FROM
+        Employees e
+    JOIN
+        Departments d ON e.department_id = d.id;
+```
+
+-   Find total salary expenditure per department
+
+```bash
+    SELECT
+        d.name AS department_name,
+        SUM(e.salary) AS total_salary
+    FROM
+        Employees e
+    JOIN
+        Departments d ON e.department_id = d.id
+    GROUP BY
+        d.name;
+```
+
+-   List employees working on more than one project
+
+```bash
+    SELECT
+        e.name AS employee_name,
+        COUNT(p.id) AS project_count
+    FROM
+        Employees e
+    JOIN
+        Projects p ON e.id = p.Employee_id
+    GROUP BY
+        e.name
+    HAVING
+        COUNT(p.id) > 1;
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+If you encounter bugs or wish to contribute, please follow these steps:
 
-## Code of Conduct
+-   Fork the repository and clone it locally.
+-   Create a new branch (`git checkout -b feature/fix-issue`).
+-   Make your changes and commit them (`git commit -am 'Fix issue'`).
+-   Push to the branch (`git push origin feature/fix-issue`).
+-   Create a new Pull Request against the `main` branch, tagging `@degod`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Contact
 
-## Security Vulnerabilities
+For inquiries or assistance, you can reach out to Godwin Uche:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   `Email:` godwinseeyou@gmail.com
+-   `Phone:` +2348024245093

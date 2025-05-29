@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,19 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('users/{uuid}/toggle', [UserManagementController::class, 'toggleStatus'])->name('users.toggle');
 });
 
-Route::middleware(['auth'])->prefix('account')->group(function () {
-    Route::get('/', [AccountSettingsController::class, 'index'])->name('account.index');
-    Route::put('profile', [AccountSettingsController::class, 'updateProfile'])->name('account.profile.update');
-    Route::put('password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('account')->group(function () {
+        Route::get('/', [AccountSettingsController::class, 'index'])->name('account.index');
+        Route::put('profile', [AccountSettingsController::class, 'updateProfile'])->name('account.profile.update');
+        Route::put('password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
+    });
+
+    Route::prefix('projects')->group(function () {
+        Route::get('/', [ProjectController::class, 'index'])->name('projects.index');
+        Route::get('/create', [ProjectController::class, 'create'])->name('projects.create');
+        Route::post('/', [ProjectController::class, 'store'])->name('projects.store');
+        Route::get('/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+        Route::put('/{id}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+    });
 });

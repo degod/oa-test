@@ -7,12 +7,13 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AccountSettingsController extends Controller
 {
     public function __construct(private UserRepositoryInterface $userRepository) {}
 
-    public function index()
+    public function index(): View
     {
         $user = Auth::user();
 

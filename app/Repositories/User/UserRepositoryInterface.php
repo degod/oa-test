@@ -19,4 +19,6 @@ interface UserRepositoryInterface
     public function update(string $uuid, array $data);
 
     public function toggleActive(string $uuid);
+
+    public function countByRole(string $role): int;
 }

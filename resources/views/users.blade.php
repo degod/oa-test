@@ -98,7 +98,7 @@
                             </div>
                             <!-- END DATA TABLE -->
 
-                            {!! $users->links() !!}
+                            {!! $users->links('pagination::bootstrap-5') !!}
                         </div>
                     </div>
                 </div>

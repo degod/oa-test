@@ -1,4 +1,3 @@
-<!-- MENU SIDEBAR-->
 <aside class="menu-sidebar2">
     <div class="logo">
         <a href="#">
@@ -26,32 +25,15 @@
                         <i class="fas fa-tachometer-alt"></i>Dashboard
                     </a>
                 </li>
-                <li class="has-sub {{ (request()->routeIs('users.index') || request()->routeIs('users.edit')) ? 'active' : '' }}">
-                    <a class="js-arrow" href="#">
+                @role('admin')
+                <li class="{{ request()->is('users/*') ? 'active' : '' }}">
+                    <a class="js-arrow" href="{{ route('users.index') }}">
                         <i class="fas fa-users"></i>User Management
-                        <span class="arrow">
-                            <i class="fas fa-angle-down"></i>
-                        </span>
                     </a>
-                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="{{ route('users.index') }}">
-                                <i class="fas fa-user"></i>Users
-                            </a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-id-badge"></i>Employees
-                            </a>
-                        </li>
-                        <li>
-                            <a href="calendar.html">
-                                <i class="fas fa-building"></i>Departments</a>
-                        </li>
-                    </ul>
                 </li>
-                <li class="">
-                    <a class="js-arrow" href="#">
+                @endrole
+                <li class="{{ request()->is('projects/*') ? 'active' : '' }}">
+                    <a class="js-arrow" href="{{ route('projects.index') }}">
                         <i class="fas fa-line-chart"></i>Project Management
                     </a>
                 </li>
@@ -59,4 +41,3 @@
         </nav>
     </div>
 </aside>
-<!-- END MENU SIDEBAR-->

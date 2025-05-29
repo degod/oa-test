@@ -45,8 +45,8 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item">
-                            <h2 class="number">388,688</h2>
-                            <span class="desc">Total Employees</span>
+                            <h2 class="number">{{ $totalAdmins }}</h2>
+                            <span class="desc">Admin Users</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-badge-check"></i>
                             </div>
@@ -54,8 +54,8 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item">
-                            <h2 class="number">1,086</h2>
-                            <span class="desc">Departments</span>
+                            <h2 class="number">{{ $totalRegularUsers }}</h2>
+                            <span class="desc">Regular Users</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-city"></i>
                             </div>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="statistic__item">
-                            <h2 class="number">$1,060,386</h2>
+                            <h2 class="number">{{ $totalProjects }}</h2>
                             <span class="desc">Projects</span>
                             <div class="icon">
                                 <i class="zmdi zmdi-chart"></i>

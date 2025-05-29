@@ -19,7 +19,10 @@ class UserSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
+        $this->command->info('An "admin" created as "superadmin@mail.com"...');
+        $this->command->info('SuperAdmin password is "superadmin"...');
 
         User::factory()->count(5)->create();
+        $this->command->info('Seeded 5 "user" roles.');
     }
 }
