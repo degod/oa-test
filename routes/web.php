@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -29,4 +30,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('users/{uuid}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
     Route::put('users/{uuid}', [UserManagementController::class, 'update'])->name('users.update');
     Route::post('users/{uuid}/toggle', [UserManagementController::class, 'toggleStatus'])->name('users.toggle');
+});
+
+Route::middleware(['auth'])->prefix('account')->group(function () {
+    Route::get('/', [AccountSettingsController::class, 'index'])->name('account.index');
+    Route::put('profile', [AccountSettingsController::class, 'updateProfile'])->name('account.profile.update');
+    Route::put('password', [AccountSettingsController::class, 'updatePassword'])->name('account.password.update');
 });

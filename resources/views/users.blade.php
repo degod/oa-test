@@ -18,6 +18,8 @@
         <div class="main-content">
             <div class="section__content">
                 <div class="container-fluid">
+                    @include('alerts')
+
                     <form method="GET" action="{{ route('users.index') }}" class="mb-3">
                         <div class="row">
                             <div class="col-md-3">

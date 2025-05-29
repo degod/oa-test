@@ -15,7 +15,7 @@
                     <div class="setting-menu js-right-sidebar d-none d-lg-block">
                         <div class="account-dropdown__body">
                             <div class="account-dropdown__item">
-                                <a href="#">
+                                <a href="{{ route('account.index') }}">
                                     <i class="zmdi zmdi-account"></i>Account</a>
                             </div>
                         </div>

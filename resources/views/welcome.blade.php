@@ -10,10 +10,11 @@
     @include('mobile-sidebar')
     <!-- END HEADER DESKTOP-->
 
-    <!-- BREADCRUMB-->
     <section class="au-breadcrumb m-t-75">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
+                @include('alerts')
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="au-breadcrumb-content">
