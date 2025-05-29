@@ -11,4 +11,12 @@ interface UserRepositoryInterface
     public function findByEmail(string $email): ?User;
 
     public function countAllUsers(): int;
+
+    public function getAllWithFilters(array $filters, int $perPage = 10);
+
+    public function findByUuid(string $uuid);
+
+    public function update(string $uuid, array $data);
+
+    public function toggleActive(string $uuid);
 }

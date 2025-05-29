@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('role:admin,user');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'role:admin,user']);
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
@@ -22,3 +23,10 @@ Route::post('/logout', function () {
 
     return redirect(route('login.form'));
 })->name('logout');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('users', [UserManagementController::class, 'index'])->name('users.index');
+    Route::get('users/{uuid}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
+    Route::put('users/{uuid}', [UserManagementController::class, 'update'])->name('users.update');
+    Route::post('users/{uuid}/toggle', [UserManagementController::class, 'toggleStatus'])->name('users.toggle');
+});

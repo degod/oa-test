@@ -21,12 +21,12 @@
         </div>
         <nav class="navbar-sidebar2">
             <ul class="list-unstyled navbar__list">
-                <li class="active">
-                    <a class="js-arrow" href="#">
+                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a class="js-arrow" href="{{ route('dashboard') }}">
                         <i class="fas fa-tachometer-alt"></i>Dashboard
                     </a>
                 </li>
-                <li class="has-sub">
+                <li class="has-sub {{ (request()->routeIs('users.index') || request()->routeIs('users.edit')) ? 'active' : '' }}">
                     <a class="js-arrow" href="#">
                         <i class="fas fa-users"></i>User Management
                         <span class="arrow">
@@ -35,7 +35,7 @@
                     </a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="table.html">
+                            <a href="{{ route('users.index') }}">
                                 <i class="fas fa-user"></i>Users
                             </a>
                         </li>

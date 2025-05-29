@@ -28,4 +28,33 @@ class UserRepository implements UserRepositoryInterface
     {
         return $this->user->count();
     }
+
+    public function getAllWithFilters(array $filters, int $perPage = 5)
+    {
+        return $this->user->when($filters['name'] ?? null, fn($q, $name) => $q->where('name', 'like', "%$name%"))
+            ->when($filters['email'] ?? null, fn($q, $email) => $q->where('email', 'like', "%$email%"))
+            ->when($filters['role'] ?? null, fn($q, $role) => $q->where('role', $role))
+            ->orderBy('id', 'DESC')
+            ->paginate($perPage);
+    }
+
+    public function findByUuid(string $uuid)
+    {
+        return $this->user->where('id', $uuid)->firstOrFail();
+    }
+
+    public function update(string $uuid, array $data)
+    {
+        $user = $this->findByUuid($uuid);
+        $user->update($data);
+        return $user;
+    }
+
+    public function toggleActive(string $uuid)
+    {
+        $user = $this->findByUuid($uuid);
+        $user->is_active = !$user->is_active;
+        $user->save();
+        return $user;
+    }
 }
